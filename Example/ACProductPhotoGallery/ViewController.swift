@@ -34,6 +34,7 @@ class ViewController: UIViewController {
         
         let vc = PPGZoomableImageSlider(images: images, currentIndex: nil, showPageIndex: true, closeButtonImage: UIImage(named: "closeBlack"))
         vc.PPGSliderDelegate = self
+        vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true, completion: nil)
     }
 
