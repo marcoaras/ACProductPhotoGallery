@@ -115,16 +115,16 @@ public class PPGZoomableImageSlider: UIPageViewController {
         self.view.addSubview(closeButton)
         if self.showPageIndex {
             self.view.addSubview(imageIndexLabel)
-            self.view.bringSubview(toFront: imageIndexLabel)
+            self.view.bringSubviewToFront(imageIndexLabel)
         }
         
-        self.view.bringSubview(toFront: closeButton)
+        self.view.bringSubviewToFront(closeButton)
         
         bottomView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: getBottomHeight()))
         
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.register(PPGPhotoCell.self, forCellWithReuseIdentifier: cellId)
+        collectionView.register(ACZoomPhotoCell.self, forCellWithReuseIdentifier: cellId)
         bottomView.addSubview(collectionView)
         self.view.addSubview(bottomView)
         
@@ -187,7 +187,7 @@ public class PPGZoomableImageSlider: UIPageViewController {
     
     func clearSelectedCells(){
         for item in collectionView.visibleCells {
-            if let cell = item as? PPGPhotoCell {
+            if let cell = item as? ACZoomPhotoCell {
                 cell.issSelected = false
             }
         }
@@ -258,7 +258,7 @@ extension PPGZoomableImageSlider: UICollectionViewDataSource, UICollectionViewDe
     
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! PPGPhotoCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ACZoomPhotoCell
         cell.selectionColor = self.selectionColor
         cell.backgroundColor = .white
          cell.imageView.kf.setImage(with: URL(string: images[indexPath.row]), placeholder: self.placeHolderImage, options: nil, progressBlock: nil, completionHandler: nil)
@@ -300,7 +300,7 @@ extension PPGZoomableImageSlider: UICollectionViewDataSource, UICollectionViewDe
     
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        if let cell = collectionView.cellForItem(at: indexPath) as? PPGPhotoCell {
+        if let cell = collectionView.cellForItem(at: indexPath) as? ACZoomPhotoCell {
             self.clearSelectedCells()
             cell.setSelected()
         }

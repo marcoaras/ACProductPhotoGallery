@@ -1,0 +1,23 @@
+PODS:
+  - ACProductPhotoGallery (0.1.0):
+    - Kingfisher
+  - Kingfisher (4.10.1)
+
+DEPENDENCIES:
+  - ACProductPhotoGallery (from `../`)
+
+SPEC REPOS:
+  trunk:
+    - Kingfisher
+
+EXTERNAL SOURCES:
+  ACProductPhotoGallery:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  ACProductPhotoGallery: 277bc582becea300faa7b2ae92ca37f5bda83e37
+  Kingfisher: c148cd7b47ebde9989f6bc7c27dcaa79d81279a0
+
+PODFILE CHECKSUM: 848b2bb1ea06976438a6324f06933265a4c50e11
+
+COCOAPODS: 1.8.4

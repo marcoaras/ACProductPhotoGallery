@@ -1,0 +1,6 @@
+framework module ACProductPhotoGallery {
+  umbrella header "ACProductPhotoGallery-umbrella.h"
+
+  export *
+  module * { export * }
+}
