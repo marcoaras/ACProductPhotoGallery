@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'ACProductPhotoGallery'
-  s.version          = '0.1.0'
+  s.version          = '0.1.1'
   s.summary          = 'ACProductPhotoGallery is image gallery for e-commerce apps to show slide and show zoomable product pictures.'
 
 # This description is used to generate tags and improve search results.
