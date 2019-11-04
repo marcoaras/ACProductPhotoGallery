@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'ACProductPhotoGallery_Example' do
+  pod 'ACProductPhotoGallery', :path => '../'
+
+  target 'ACProductPhotoGallery_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
