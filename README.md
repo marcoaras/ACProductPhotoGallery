@@ -9,9 +9,7 @@
 `ACProductPhotoGallery` is a modern looking photo gallery written in `Swift` for `iOS`. `ACProductPhotoGallery` can handle your remote images by using `Kingfisher` to show zoomable images. Also `ACProductPhotoGallery` has navitaion section to select images at the bottom of big image.
 
 
-## Screen Shots
-
-![](https://user-images.githubusercontent.com/12196584/68140086-4313c300-ff3c-11e9-87b5-d82948a88483.png) ![](https://user-images.githubusercontent.com/12196584/68140523-04323d00-ff3d-11e9-997c-36d54db77105.png)
+![](https://user-images.githubusercontent.com/12196584/68153382-6481a880-ff56-11e9-8fba-754652d2823f.gif)
 
 
 ## Example
