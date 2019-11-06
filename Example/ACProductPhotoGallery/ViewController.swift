@@ -32,7 +32,7 @@ class ViewController: UIViewController {
             "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/iphone-11-pro-select-2019-family_GEO_EMEA?wid=441&amp;hei=529&amp;fmt=jpeg&amp;qlt=95&amp;op_usm=0.5,0.5&amp;.v=1567812929188",
             "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/iphone-11-pro-max-gold-select-2019_GEO_EMEA?wid=470&hei=556&fmt=png-alpha&.v=1567808544078"]
         
-        let vc = PPGZoomableImageSlider(images: images, currentIndex: nil, showPageIndex: true, closeButtonImage: UIImage(named: "closeBlack"))
+        let vc = PPGZoomableImageSlider(images: images, currentIndex: nil, showPageIndex: true, closeButtonImage: UIImage(named: "closeBlack"), showEffectView: true)
         vc.PPGSliderDelegate = self
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true, completion: nil)

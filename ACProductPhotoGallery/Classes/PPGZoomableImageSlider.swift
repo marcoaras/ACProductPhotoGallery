@@ -26,6 +26,7 @@ public class PPGZoomableImageSlider: UIPageViewController {
     }
     
     var showPageIndex = true
+    var showEffectView = false
     let imageIndexLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 40))
     let closeButton = UIButton(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
     var bottomView: UIView!
@@ -41,9 +42,13 @@ public class PPGZoomableImageSlider: UIPageViewController {
         return collection
     }()
     let flow = UICollectionViewFlowLayout()
+    var effectView: UIView!
     
-    init() {
+    init( showEffectView: Bool, showPageIndex: Bool) {
         super.init(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
+        self.showPageIndex = showPageIndex
+        self.showEffectView = showEffectView
+        setUpUI()
     }
     
     required public init?(coder: NSCoder) {
@@ -53,8 +58,8 @@ public class PPGZoomableImageSlider: UIPageViewController {
     }
     
     
-    public convenience init(images: [String], currentIndex: Int?, placeHolderImage: String = "", showPageIndex: Bool = true, selectionColor: UIColor = .orange, closeButtonImage: UIImage?) {
-        self.init()
+    public convenience init(images: [String], currentIndex: Int?, placeHolderImage: String = "", showPageIndex: Bool = true, selectionColor: UIColor = .orange, closeButtonImage: UIImage?, showEffectView: Bool = false) {
+        self.init(showEffectView: showEffectView, showPageIndex: showPageIndex)
         
         self.selectionColor = selectionColor
         
@@ -66,8 +71,7 @@ public class PPGZoomableImageSlider: UIPageViewController {
         if let _ = currentIndex {
             self.currentIndex = currentIndex!
         }
-        self.showPageIndex = showPageIndex
-        
+       
         if closeButtonImage != nil {
             closeButton.setBackgroundImage(closeButtonImage, for: .normal)
         }
@@ -78,7 +82,6 @@ public class PPGZoomableImageSlider: UIPageViewController {
     
     public override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        self.currentIndex = 0
     }
     
     public override var prefersStatusBarHidden: Bool {
@@ -103,8 +106,7 @@ public class PPGZoomableImageSlider: UIPageViewController {
         delegate = self
         self.view.backgroundColor = UIColor.white
         goSpecificPage()
-        setUpUI()
-        
+       
     }
     
     func setUpUI()
@@ -112,7 +114,20 @@ public class PPGZoomableImageSlider: UIPageViewController {
 
         closeButton.addTarget(self, action: #selector(closeButtonTapped), for: .touchUpInside)
         
-        self.view.addSubview(closeButton)
+        if showEffectView {
+            if UIDevice().isDeviceWith_XShape {
+                self.effectView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 88))
+            }else{
+                self.effectView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 50))
+            }
+            
+            self.view.addSubview(effectView)
+            self.effectView.addSubview(closeButton)
+        }else{
+            self.view.addSubview(closeButton)
+        }
+    
+        
         if self.showPageIndex {
             self.view.addSubview(imageIndexLabel)
             self.view.bringSubviewToFront(imageIndexLabel)
@@ -133,16 +148,20 @@ public class PPGZoomableImageSlider: UIPageViewController {
     
     func setupConstraints(){
         
+        effectView.applyGradient(colours: [
+            UIColor(red: 0, green: 0, blue: 0, alpha: 0.2),
+            UIColor(red: 0, green: 0, blue: 0, alpha: 0)])
+        
         closeButton.translatesAutoresizingMaskIntoConstraints = false
         imageIndexLabel.translatesAutoresizingMaskIntoConstraints = false
         bottomView.translatesAutoresizingMaskIntoConstraints = false
         
         //Index Label
         let labelTrailingConstraint = NSLayoutConstraint(item: imageIndexLabel, attribute: .trailing, relatedBy: .equal, toItem: self.view, attribute: .trailing, multiplier: 1, constant: -8)
-        let labelBottomConstraint = NSLayoutConstraint(item: imageIndexLabel, attribute: .bottom, relatedBy: .equal, toItem: self.bottomLayoutGuide, attribute: .top, multiplier: 1, constant: -8)
+        let labelBottomConstraint = NSLayoutConstraint(item: imageIndexLabel, attribute: .bottom, relatedBy: .equal, toItem: self.bottomView, attribute: .top, multiplier: 1, constant: -8)
         
         //Close Button
-        let closeButtonLeadingConstraint = NSLayoutConstraint(item: closeButton, attribute: .leading, relatedBy: .equal, toItem: self.view, attribute: .leading, multiplier: 1, constant: 8)
+        let closeButtonLeadingConstraint = NSLayoutConstraint(item: closeButton, attribute: .leading, relatedBy: .equal, toItem: self.view, attribute: .leading, multiplier: 1, constant: 16)
         let closeButtonTopConstraint = NSLayoutConstraint(item: closeButton, attribute: .top, relatedBy: .equal, toItem: self.topLayoutGuide, attribute: .bottom, multiplier: 1, constant: 8)
         let closeButtonWidthConstraint = NSLayoutConstraint(item: closeButton, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .width, multiplier: 1, constant: 30)
         let closeButtonHeightConstraint = NSLayoutConstraint(item: closeButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: 30)
@@ -278,7 +297,7 @@ extension PPGZoomableImageSlider: UICollectionViewDataSource, UICollectionViewDe
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout:
         UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         
-        if images.count <= 6 && !UIDevice().isDeviceWith_XShape  {
+        if images.count <= 5 && !UIDevice().isDeviceWith_XShape  {
             
             collectionView.isScrollEnabled = false
             let numberOfItems = collectionView.numberOfItems(inSection: 0)
